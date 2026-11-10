@@ -191,3 +191,24 @@ def test_write_config_approved_yes_string_does_not_count(root):
 def test_delete_state_approved_yes_string_does_not_count(root):
     with pytest.raises(PermissionError):
         policy.check_delete("state/atlassp.json", approved="yes")
+
+
+# ================================================================== added 2026-11-10 — stricter delete rule
+# GATE.md section 5, change 2026-11-10 (Chethan): any delete in config/, state/ or jobs/
+# needs approval; deletes elsewhere blocked.
+
+# EXPECTED: needs approval
+@pytest.mark.parametrize("path", ["jobs/report-2026-11-10.json", "config/boards.json"],
+                         ids=["jobs", "config"])
+def test_delete_in_jobs_or_config_needs_approval(root, path):
+    with pytest.raises(PermissionError):
+        policy.check_delete(path)
+    policy.check_delete(path, approved=True)
+
+
+# EXPECTED: blocked (even with approval)
+@pytest.mark.parametrize("path", ["outside/secret.txt", "secret", "jobs-evil/x", "jobs/../secret"],
+                         ids=["outside-folder", "root-file", "lookalike-folder", "dotdot-escape"])
+def test_delete_outside_allowed_folders_blocked(root, path):
+    with pytest.raises(PermissionError):
+        policy.check_delete(path, approved=True)
