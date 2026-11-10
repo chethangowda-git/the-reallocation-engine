@@ -1,0 +1,26 @@
+[
+  {
+    "name": "atlassp",
+    "company": "ATLAS SP",
+    "ats": "greenhouse",
+    "url": "https://boards-api.greenhouse.io/v1/boards/atlassp/jobs"
+  },
+  {
+    "name": "hubspotjobs",
+    "company": "HubSpot",
+    "ats": "greenhouse",
+    "url": "https://boards-api.greenhouse.io/v1/boards/hubspotjobs/jobs"
+  },
+  {
+    "name": "analyticpartners",
+    "company": "Analytic Partners",
+    "ats": "lever",
+    "url": "https://api.lever.co/v0/postings/analyticpartners?mode=json"
+  },
+  {
+    "name": "atlassp-doesnotexist",
+    "company": "Deliberate failure",
+    "ats": "greenhouse",
+    "url": "https://boards-api.greenhouse.io/v1/boards/atlassp-doesnotexist/jobs"
+  }
+]
