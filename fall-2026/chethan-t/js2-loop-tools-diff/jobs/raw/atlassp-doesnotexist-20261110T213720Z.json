@@ -1,0 +1,15 @@
+{
+  "board": "atlassp-doesnotexist",
+  "url": "https://boards-api.greenhouse.io/v1/boards/atlassp-doesnotexist/jobs",
+  "run_at": "2026-11-10T21:37:20+00:00",
+  "attempts": [
+    {
+      "fetched_at": "2026-11-10T21:37:21+00:00",
+      "status_code": 404,
+      "body": {
+        "status": 404,
+        "error": "Job not found"
+      }
+    }
+  ]
+}

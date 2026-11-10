@@ -1,0 +1,66 @@
+{
+  "run_at": "2026-11-10T21:37:20+00:00",
+  "exit_code": 1,
+  "boards_file": "config/boards.json",
+  "raw_files": [
+    "jobs/raw/atlassp-20261110T213720Z.json",
+    "jobs/raw/hubspotjobs-20261110T213720Z.json",
+    "jobs/raw/analyticpartners-20261110T213720Z.json",
+    "jobs/raw/atlassp-doesnotexist-20261110T213720Z.json"
+  ],
+  "report": {
+    "status": "incomplete",
+    "observations": [
+      {
+        "board": "atlassp",
+        "status": "baseline",
+        "timestamp": "2026-11-10T21:37:20+00:00",
+        "status_code": 200,
+        "request_count": 1,
+        "notes": [
+          "baseline: recorded 2 job IDs; nothing reported as new on a first run"
+        ]
+      },
+      {
+        "board": "hubspotjobs",
+        "status": "baseline",
+        "timestamp": "2026-11-10T21:37:20+00:00",
+        "status_code": 200,
+        "request_count": 1,
+        "notes": [
+          "baseline: recorded 122 job IDs; nothing reported as new on a first run"
+        ]
+      },
+      {
+        "board": "analyticpartners",
+        "status": "baseline",
+        "timestamp": "2026-11-10T21:37:21+00:00",
+        "status_code": 200,
+        "request_count": 1,
+        "notes": [
+          "baseline: recorded 21 job IDs; nothing reported as new on a first run"
+        ]
+      },
+      {
+        "board": "atlassp-doesnotexist",
+        "status": "failed",
+        "timestamp": "2026-11-10T21:37:21+00:00",
+        "status_code": 404,
+        "request_count": 1,
+        "notes": []
+      }
+    ],
+    "new_jobs": {},
+    "errors": [
+      {
+        "board": "atlassp-doesnotexist",
+        "url": "https://boards-api.greenhouse.io/v1/boards/atlassp-doesnotexist/jobs",
+        "status_code": 404,
+        "error": "HTTP 404 not found",
+        "reason": "board name is probably wrong (renamed or removed); retrying won't fix it",
+        "manual_check": "curl -sS -i https://boards-api.greenhouse.io/v1/boards/atlassp-doesnotexist/jobs",
+        "escalate": true
+      }
+    ]
+  }
+}

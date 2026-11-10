@@ -1,0 +1,74 @@
+{
+  "board": "atlassp",
+  "url": "https://boards-api.greenhouse.io/v1/boards/atlassp/jobs",
+  "run_at": "2026-11-10T21:37:20+00:00",
+  "attempts": [
+    {
+      "fetched_at": "2026-11-10T21:37:20+00:00",
+      "status_code": 200,
+      "body": {
+        "jobs": [
+          {
+            "absolute_url": "https://job-boards.greenhouse.io/atlassp/jobs/5199629007",
+            "data_compliance": [
+              {
+                "type": "gdpr",
+                "requires_consent": false,
+                "requires_processing_consent": false,
+                "requires_retention_consent": false,
+                "retention_period": null,
+                "demographic_data_consent_applies": false
+              }
+            ],
+            "education": "education_optional",
+            "employment": "employment_optional",
+            "internal_job_id": 4662562007,
+            "location": {
+              "name": "Charlotte, North Carolina, United States; Raleigh, North Carolina, United States"
+            },
+            "metadata": null,
+            "id": 5199629007,
+            "updated_at": "2026-07-30T12:24:09-04:00",
+            "requisition_id": "221",
+            "title": "Operational & Reputational Risk - Associate | VP",
+            "company_name": "  ATLAS SP",
+            "first_published": "2026-07-30T12:24:09-04:00",
+            "language": "en",
+            "application_deadline": null
+          },
+          {
+            "absolute_url": "https://job-boards.greenhouse.io/atlassp/jobs/5286455007",
+            "data_compliance": [
+              {
+                "type": "gdpr",
+                "requires_consent": false,
+                "requires_processing_consent": false,
+                "requires_retention_consent": false,
+                "retention_period": null,
+                "demographic_data_consent_applies": false
+              }
+            ],
+            "education": "education_optional",
+            "employment": "employment_optional",
+            "internal_job_id": 4703770007,
+            "location": {
+              "name": "New York, New York, United States"
+            },
+            "metadata": null,
+            "id": 5286455007,
+            "updated_at": "2026-11-05T19:54:06-05:00",
+            "requisition_id": "242",
+            "title": "Secured Capital Markets Analyst/Associate",
+            "company_name": "  ATLAS SP",
+            "first_published": "2026-11-05T19:54:06-05:00",
+            "language": "en",
+            "application_deadline": null
+          }
+        ],
+        "meta": {
+          "total": 2
+        }
+      }
+    }
+  ]
+}
