@@ -136,3 +136,58 @@ def test_post_blocked():
 # EXPECTED: allowed
 def test_get_allowed():
     policy.check_method("GET")
+
+
+# EXPECTED: allowed
+def test_lowercase_get_allowed():
+    policy.check_method("get")
+
+
+# ================================================================== added 2026-11-10 — URL edge cases
+
+# EXPECTED: blocked
+@pytest.mark.parametrize("url", [
+    "https://user:pass@boards-api.greenhouse.io/v1/boards/atlassp/jobs",   # user + password
+    "https://token@api.lever.co/v0/postings/analyticpartners?mode=json",   # token as username
+], ids=["user-and-password", "token-only"])
+def test_credentials_in_url_blocked(url):
+    with pytest.raises(PermissionError):
+        policy.check_host(url)
+
+
+# EXPECTED: blocked
+def test_non_standard_port_blocked():
+    with pytest.raises(PermissionError):
+        policy.check_host("https://boards-api.greenhouse.io:8443/v1/boards/atlassp/jobs")
+
+
+# EXPECTED: allowed
+def test_explicit_port_443_allowed():
+    policy.check_host("https://boards-api.greenhouse.io:443/v1/boards/atlassp/jobs")
+
+
+# EXPECTED: blocked
+@pytest.mark.parametrize("url", [
+    "https://boards-api.greenhouse.io:99999/v1/boards/atlassp/jobs",   # port out of range
+    "https://boards-api.greenhouse.io:abc/v1/boards/atlassp/jobs",     # port not a number
+    "boards-api.greenhouse.io/v1/boards/atlassp/jobs",                 # no scheme
+    "not a url",
+    "",
+], ids=["port-out-of-range", "port-not-numeric", "no-scheme", "not-a-url", "empty"])
+def test_malformed_url_blocked(url):
+    with pytest.raises(PermissionError):
+        policy.check_host(url)
+
+
+# ================================================================== added 2026-11-10 — approval must be exactly True
+
+# EXPECTED: needs approval (approved="yes" does not count)
+def test_write_config_approved_yes_string_does_not_count(root):
+    with pytest.raises(PermissionError):
+        policy.check_write("config/boards.json", approved="yes")
+
+
+# EXPECTED: needs approval (approved="yes" does not count)
+def test_delete_state_approved_yes_string_does_not_count(root):
+    with pytest.raises(PermissionError):
+        policy.check_delete("state/atlassp.json", approved="yes")

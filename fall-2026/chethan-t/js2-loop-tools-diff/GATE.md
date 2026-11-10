@@ -92,6 +92,9 @@ Every other host is blocked.
 
 The policy is enforced in code, not in a prompt.
 
+**Changes:**
+- 2026-11-10 (Chethan): any delete in config/, state/ or jobs/ needs approval; deletes elsewhere blocked.
+
 ---
 
 ## 6. Wrong versions (tests must catch these)
