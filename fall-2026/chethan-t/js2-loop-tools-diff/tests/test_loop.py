@@ -249,6 +249,21 @@ def test_sde_matches_only_as_whole_word(state_dir, title, expected):
     assert (title in _reported_titles(state_dir, [title])) is expected
 
 
+# ------------------------------------------------------------------ policy enforced by the loop
+def test_blocked_host_is_never_fetched(state_dir):
+    """GATE 5 Permission policy: the loop calls policy.check_host before every fetch,
+    so a board on a host outside the allow-list is never requested."""
+    evil = {"name": "evilboard", "ats": "greenhouse", "url": "https://evil.com/v1/boards/atlassp/jobs"}
+    fetch = FakeFetcher({evil["url"]: [OK_GH], HUBSPOT["url"]: [OK_GH]})
+
+    report = loop.run([evil, HUBSPOT], fetch, BUDGET, state_dir)
+
+    assert evil["url"] not in fetch.calls
+    assert obs_for(report, evil["name"])["status"] == "failed"
+    assert fetch.count(HUBSPOT["url"]) == 1   # the allowed board is still checked
+    assert report["status"] == "incomplete"
+
+
 # ------------------------------------------------------------------ new_jobs shape (call 2)
 def test_ok_board_with_no_matching_titles_reports_empty_list(state_dir):
     """Call 2 (Chethan, 2026-11-10): an "ok" board with nothing matching -> new_jobs = []."""

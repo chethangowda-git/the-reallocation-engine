@@ -121,7 +121,11 @@ def err_for(report, board_name):
 
 # ------------------------------------------------------------------ fixtures
 @pytest.fixture
-def state_dir(tmp_path):
+def state_dir(tmp_path, monkeypatch):
+    """tmp_path stands in for the agent root, so tmp_path/state is the agent's state/
+    folder and the loop's policy checks (check_read / check_write) apply to it."""
+    from agent import policy
+    monkeypatch.setattr(policy, "ROOT", tmp_path)
     d = tmp_path / "state"
     d.mkdir()
     return d
