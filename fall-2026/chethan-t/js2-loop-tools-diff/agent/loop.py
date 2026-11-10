@@ -179,7 +179,9 @@ def _check_board(board, fetch, state_dir, ctx, report, done, rest_after):
         return True
 
     new = [j for j in jobs if j["id"] not in seen and title_matches(j["title"])]
-    _save_state(state_dir, state_path, ids_now, name, done, rest_after, report, code, attempts, notes)
+    # GATE.md section 6 change (2026-11-10): an ID seen in ANY earlier run is never new again,
+    # so the saved set keeps every ID ever seen, not only the IDs on the board right now.
+    _save_state(state_dir, state_path, seen | ids_now, name, done, rest_after, report, code, attempts, notes)
     report["new_jobs"][name] = new
     _observe(report, name, "ok", code, attempts, notes)
     return True
