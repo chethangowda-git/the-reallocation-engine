@@ -108,3 +108,6 @@ The policy is enforced in code, not in a prompt.
 | 5 | Failed board wipes saved state — next run shows every job as "new." | Fail a board; `state/` must stay unchanged for that board. |
 | 6 | Path check by prefix — `startswith("jobs")` allows `jobs-evil/`. | Boundary test. |
 | 7 | Retrying a 404 — wastes budget. | A 404 board must get exactly 1 request. |
+
+**Changes:**
+- 2026-11-10 (Chethan): A job ID seen in any earlier run is not new, even if it was removed and reposted.

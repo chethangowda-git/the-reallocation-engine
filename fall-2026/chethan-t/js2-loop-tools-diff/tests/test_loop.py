@@ -249,6 +249,27 @@ def test_sde_matches_only_as_whole_word(state_dir, title, expected):
     assert (title in _reported_titles(state_dir, [title])) is expected
 
 
+# ------------------------------------------------------------------ reposted jobs (GATE 6 change)
+def test_job_seen_earlier_then_removed_then_reposted_is_not_new(state_dir):
+    """GATE 6 change (Chethan, 2026-11-10): a job ID seen in any earlier run is not new,
+    even if it was removed and reposted. Three runs on one board:
+      run 1: job 123 appears          -> new: [123]
+      run 2: 123 removed, 456 appears -> new: [456]
+      run 3: 123 reposted (same ID)   -> new: []   (123 was seen in run 1)
+    """
+    seed_state(state_dir, ATLAS["name"], [])  # not a first run, so run 1 reports new jobs
+
+    def one_run(jobs):
+        fetch = FakeFetcher({ATLAS["url"]: [(200, gh_body(jobs))]})
+        report = loop.run([ATLAS], fetch, BUDGET, state_dir)
+        assert report["status"] == "finished"
+        return sorted(str(j["id"]) for j in report["new_jobs"][ATLAS["name"]])
+
+    assert one_run([(123, "Software Engineer")]) == ["123"]
+    assert one_run([(456, "Software Engineer II")]) == ["456"]
+    assert one_run([(123, "Software Engineer"), (456, "Software Engineer II")]) == []
+
+
 # ------------------------------------------------------------------ policy enforced by the loop
 def test_blocked_host_is_never_fetched(state_dir):
     """GATE 5 Permission policy: the loop calls policy.check_host before every fetch,
